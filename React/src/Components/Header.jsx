@@ -159,11 +159,13 @@ const Header = () => {
     }
 
 
+    const API_URL = import.meta.env.VITE_API_URL;
+
     const handleTimeDialogOk = async () => {
         if (reportTime) {
             const token = localStorage.getItem('token');
             try {
-                const response = await axios.post(`https://reactnode-server.onrender.com/User/addReportTime/${user._id}`, {
+                const response = await axios.post(`${API_URL}/User/addReportTime/${user._id}`, {
                     email: user.email,
                     name: user.name,
                     reportTime: reportTime

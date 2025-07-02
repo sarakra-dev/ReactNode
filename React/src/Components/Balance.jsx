@@ -13,6 +13,7 @@ const Balance = () => {
     const sum = useSelector((state) => state.user.user.sumMoney);
     const [balance, setBalance] = useState(0);
     const id = useSelector((state) => state.user.user._id);
+    const API_URL = import.meta.env.VITE_API_URL;
     //מערך הכנסות
     const revenueArr = [
         { id: 1, name: 'משכורת', Total: 0 },
@@ -63,11 +64,9 @@ const Balance = () => {
 
     // שליפת כל ההכנסות
     const getAllRevenue = async () => {
-        debugger
-        console.log("id", id)
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`https://reactnode-server.onrender.com/Revenue/getAllRevenueById/${id}`, {
+            const response = await axios.get(`${API_URL}/Revenue/getAllRevenueById/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,

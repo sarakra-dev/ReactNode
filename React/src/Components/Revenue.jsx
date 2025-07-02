@@ -18,6 +18,8 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 // מערך סוגי הכנסות
 const revenueTypes = [
     { id: 1, name: 'משכורת' },
@@ -57,7 +59,7 @@ const Revenue = () => {
     const getAllRevenue = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`https://reactnode-server.onrender.com/Revenue/getAllRevenueById/${userId}`, {
+            const response = await axios.get(`${API_URL}/Revenue/getAllRevenueById/${userId}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -72,11 +74,10 @@ const Revenue = () => {
     // הוספת הכנסה חדשה
     const addRevenue = async (item) => {
         try {
-            debugger
             const token = localStorage.getItem('token');
             const price = parseFloat(newAmounts[item.id]) || 0;
             if (!price) return;
-            await axios.post(`https://reactnode-server.onrender.com/Revenue/addRevenue/${userId}`, {
+            await axios.post(`${API_URL}/Revenue/addRevenue/${userId}`, {
                 userId,
                 price,
                 revenueId: item.id,
@@ -95,17 +96,14 @@ const Revenue = () => {
 
     // מחיקת הכנסה לפי מזהה ההכנסה
     const deleteRevenue = async (revenueId) => {
-        debugger
         try {
-            debugger
             const token = localStorage.getItem('token');
-            await axios.delete(`https://reactnode-server.onrender.com/Revenue/deleteRevenue/${userId}/${revenueId}`, {
+            await axios.delete(`${API_URL}/Revenue/deleteRevenue/${userId}/${revenueId}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 }
             });
-            debugger
             setRefresh(r => !r); // רענון הנתונים אחרי מחיקה
         } catch (error) {
             console.error("Error deleting revenue:", error);

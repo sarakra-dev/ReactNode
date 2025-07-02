@@ -63,6 +63,8 @@ const iconMap = {
     DoneAllIcon: DoneAllIcon
 };
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Expenses = () => {
     const dispatch = useDispatch();
     const [pieCategory, setPieCategory] = useState([]);
@@ -93,10 +95,10 @@ const Expenses = () => {
         console.log("id", id)
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`https://reactnode-server.onrender.com/Expenses/pullExpenses/${id}`, {
+            const response = await axios.get(`${API_URL}/Expenses/pullExpenses/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`, // הוספת הטוקן לכותרת Authorization
+                    'Authorization': `Bearer ${token}`,
                 },
             });
 
@@ -228,15 +230,13 @@ const Expenses = () => {
         }
     };
     const saveExpense = async () => {
-        debugger
         try {
-            debugger
             const dateNow = new Date(Date.now());
             const userId = user._id;
             const name = user.name;
             const email = user.email;
 
-            const response = await axios.post(`https://reactnode-server.onrender.com/Expenses/addExpenses/${userId}`, {
+            const response = await axios.post(`${API_URL}/Expenses/addExpenses/${userId}`, {
                 email,
                 name,
                 userId,

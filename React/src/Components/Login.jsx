@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import { setUser, setUserConect } from '../Store/UserSlice';
 import useAuthValidation from "../hooks/useAuthValidation";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Login = ({ onClose }) => {
     const [isRegistering, setIsRegistering] = useState(true);
     const [name, setName] = useState('');
@@ -39,7 +41,7 @@ const Login = ({ onClose }) => {
 
     const connectUser = async () => {
         try {
-            const response = await axios.post('https://reactnode-server.onrender.com/User/IfUserExists', {
+            const response = await axios.post(`${API_URL}/User/IfUserExists`, {
                 password,
                 email,
             }, {
@@ -64,7 +66,7 @@ const Login = ({ onClose }) => {
 
     const saveUser = async () => {
         try {
-            const response = await axios.post('https://reactnode-server.onrender.com/User/addUser', {
+            const response = await axios.post(`${API_URL}/User/addUser`, {
                 password,
                 name,
                 email,
@@ -79,7 +81,7 @@ const Login = ({ onClose }) => {
             await showMessage('נרשמת בהצלחה!');
             setTimeout(() => {
                 onClose();
-                navigate('/Home'); // מעבר לדף הבית אחרי הרשמה
+                navigate('/Home');
             }, 1000);
         } catch (error) {
             if (error.response?.data?.message) {
@@ -145,7 +147,7 @@ const Login = ({ onClose }) => {
                 <button
                     className="google-btn"
                     type="button"
-                    onClick={() => window.location.href = 'https://reactnode-server.onrender.com/auth/google'}
+                    onClick={() => window.location.href = `${API_URL}/auth/google`}
                 >
                     <GoogleIcon style={{ color: "#ea4335", fontSize: "1.5rem" }} />
                     התחברות עם Google
